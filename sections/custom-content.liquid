@@ -1,7 +1,8 @@
 <div class="page-width">
   {% if section.settings.title != blank %}
     <div class="section-header text-center">
-      <h4 class="h2">{{ section.settings.title | escape }}</h4>
+      <h1 class="h3">{{ section.settings.title | escape }}</h1>
+      <h2 class="h4">{{ section.settings.sub-title | escape }}</h2>
     </div>
   {% endif %}
 
@@ -37,7 +38,7 @@
         {% endunless %}
       {% endif %}
 
-      <div class="custom__item custom__item--{{block.id}} {{ block_width }} {% if block.settings.alignment %}align--{{ block.settings.alignment }}{% endif %}" {{ block.shopify_attributes }}>
+      <div class="custom__item custom__item--{{block.id}} {{ block_width }} {% if block.settings.alignment %}align--{{ block.settings.alignment }}{% endif %} {% if block.type == 'video' %} section-video-container{% endif %}" {{ block.shopify_attributes }}>
         <div class="custom__item-inner custom__item-inner--{{ block.type }}"{% if block.type == 'image' %} id="{{ img_wrapper_id }}"{% endif %}>
           {% case block.type %}
             {% when 'image' %}
@@ -80,6 +81,13 @@
                   {% if block.settings.video_url.type == "vimeo" %}
                     <iframe src="//player.vimeo.com/video/{{ block.settings.video_url.id }}?byline=0&portrait=0&badge=0" width="850" height="480" frameborder="0" allowfullscreen></iframe>
                   {% endif %}
+                {% endif %}
+              </div>
+            {% when 'video' %}
+              <div class="video-info-container">
+                {% if block.settings.video_title != blank %}
+                  <h4 class="h4 video-info--title">{{ block.settings.video_title | escape }}</h4>
+                  <p class="video-info--info">{{ block.settings.video_info | escape }}</p>
                 {% endif %}
               </div>
             {% when 'product' %}
@@ -131,6 +139,12 @@
         "type": "text",
         "id": "title",
         "label": "Heading",
+        "default": "Custom content"
+      },
+      {
+        "type": "text",
+        "id": "sub-title",
+        "label": "Sub-Heading",
         "default": "Custom content"
       }
     ],
@@ -303,6 +317,18 @@
             "id": "video_url",
             "label": "YouTube or Vimeo link",
             "accept": ["youtube", "vimeo"]
+          },
+          {
+            "type": "text",
+            "id": "video_title",
+            "label": "Video Title",
+            "default": "Custom content"
+          },
+          {
+            "type": "text",
+            "id": "video_info",
+            "label": "Video Info",
+            "default": "Custom content"
           },
           {
             "type": "select",

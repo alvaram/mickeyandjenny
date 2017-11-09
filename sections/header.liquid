@@ -23,13 +23,13 @@
 {% endif %}
 
 <div data-section-id="{{ section.id }}" data-section-type="header-section">
-  <nav class="mobile-nav-wrapper medium-up--hide" role="navigation">
+  <nav class="mobile-nav-wrapper widescreen--hide" role="navigation">
     <ul id="MobileNav" class="mobile-nav">
       {% for link in linklists[section.settings.main_linklist].links %}
         {%- assign outerLoopIndex = forloop.index -%}
         {%- assign child_list_handle = link.title | handleize -%}
 
-        <li class="mobile-nav__item{% unless forloop.last %} border-bottom{% endunless %}">
+        <li class="mobile-nav__item{% unless forloop.last %} border-bottom{% endunless %} border-bottom">
           {% if linklists[child_list_handle].links != blank %}
             <button type="button" class="btn--link js-toggle-submenu mobile-nav__link" data-target="{{ child_list_handle }}-{{ outerLoopIndex }}" data-level="1">
               {{ link.title }}
@@ -102,6 +102,9 @@
           {% endif %}
         </li>
       {% endfor %}
+      <li class="mobile-nav__item">
+        <a href="/search" class="mobile-nav__link site-header__search-toggle js-drawer-open-top">Search</a>
+      </li>
     </ul>
   </nav>
 
@@ -159,10 +162,10 @@
       {% if section.settings.align_logo == 'center' %}
         {%- assign logo_classes = 'medium-up--one-third logo-align--center' -%}
       {% else %}
-        {%- assign logo_classes = 'medium-up--one-quarter logo-align--left' -%}
+        {%- assign logo_classes = 'medium-up--one-whole logo-align--left' -%}
       {% endif %}
 
-      <div class="grid__item small--one-whole medium-up--hide {{ logo_classes }}">
+      <div class="grid__item small--one-whole widescreen--hide {{ logo_classes }}">
         {% comment %}
           Use the uploaded logo from theme settings if enabled.
           Site name gets precedence with H1 tag on homepage, div on other pages.
@@ -203,7 +206,7 @@
               </noscript>
             </a>
           {% else %}
-            <a class="site-header__logo-link medium-up--hide" href="/" itemprop="url">{% include 'icon-logo' %}</a>
+            <a class="site-header__logo-link" href="/" itemprop="url">{% include 'icon-logo' %}</a>
           {% endif %}
         {% if template.name == 'index' %}
           </h1>
@@ -211,15 +214,24 @@
           </div>
         {% endif %}
           
-        <button type="button" class="btn--link site-header__search-toggle js-drawer-open-top medium-up--hide">
-            {% include 'icon-search' %}
-            <span class="icon__fallback-text">{{ 'layout.navigation.search' | t }}</span>
+        <button type="button" class="btn--link site-header__search-toggle">
+            <a href="/cart" class="">
+              {% include 'icon-cart' %}
+              <span class="visually-hidden">{{ 'layout.cart.title' | t }}</span>
+              <span class="icon__fallback-text">{{ 'layout.cart.title' | t }}</span>
+              {% if cart.item_count > 0 %}
+                <div id="CartCount" class="site-header__cart-count">
+                  <span>{{ cart.item_count }}</span>
+                  <span class="icon__fallback-text medium-up--hide">{{ 'layout.cart.items_count' | t: count: cart.item_count }}</span>
+                </div>
+              {% endif %}
+            </a>
         </button>
 
       </div>
 
       {% if section.settings.align_logo == 'left' %}
-        <nav class="grid__item medium-up--one-whole small--hide" id="AccessibleNav" role="navigation">
+        <nav class="grid__item medium-up--one-whole large-down--hide" id="AccessibleNav" role="navigation">
           {% include 'site-nav' %}
         </nav>
       {% endif %}
