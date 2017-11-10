@@ -1,7 +1,7 @@
 <div class="page-width">
   {% if section.settings.title != blank %}
     <div class="section-header text-center">
-      <h2>{{ section.settings.title | escape }}</h2>
+      <h1 class="h3">{{ section.settings.title | escape }}</h2>
     </div>
   {% endif %}
 
@@ -9,22 +9,24 @@
     {% when 2 %}
       {%- assign grid_item_width = 'medium-up--one-half' -%}
     {% when 3 %}
-      {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
+      {%- assign grid_item_width = 'small--whole medium-up--one-third' -%}
     {% when 4 %}
-      {%- assign grid_item_width = 'small--one-half medium-up--one-quarter' -%}
+      {%- assign grid_item_width = 'small--whole medium-up--one-third' -%}
     {% when 5 %}
-      {%- assign grid_item_width = 'small--one-half medium-up--one-fifth' -%}
+      {%- assign grid_item_width = 'small--whole medium-up--one-third' -%}
+    {% when 6 %}
+      {%- assign grid_item_width = 'small--whole medium-up--one-third' -%}
   {% endcase %}
 
   <div class="collection-grid">
-    <div class="grid grid--uniform">
+      <div class="collection-slider-for">
       {% for block in section.blocks limit: section.blocks.size %}
-        <div class="grid__item {{ grid_item_width }}" {{ block.shopify_attributes }}>
+        <div class="">
           {%- assign collection = collections[block.settings.collection] -%}
           {% include 'collection-grid-item' %}
         </div>
       {% endfor %}
-    </div>
+      </div>
   </div>
 
   {% if section.blocks.size == 0 %}
@@ -49,7 +51,7 @@
         "id": "grid",
         "label": "Collections per row",
         "min": 2,
-        "max": 5,
+        "max": 6,
         "step": 1,
         "default": 3
       }
