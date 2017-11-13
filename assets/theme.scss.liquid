@@ -1225,6 +1225,23 @@ html {
   @include media-query($medium-up) {
     margin-bottom: 20px;
   }
+  .about-us-header {
+    display: table;
+    white-space: nowrap;
+    font-family: "Avenir-medium","HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: em(16px);
+    overflow: hidden;
+    &:before, &:after {
+      border-top: 1px solid #000;
+      content: '';
+      display: table-cell;
+      position: relative;
+      top: 0.5em;
+      width: 46%;
+    }
+    &:before { right: 2.5%; }
+    &:after { left: 2.5%; }
+  }
 }
 
 /*================ Typography ================*/
@@ -5043,6 +5060,12 @@ $toolbar-height-small: 46px;
 .site-footer__linklist-item {
   display: inline-block;
   padding: 5px 10px;
+  font-size: em(15px);
+  font-weight: $font-weight-bold;
+
+  + span:last-child {
+    display: none;
+  } 
 
   @include media-query($medium-up) {
     display: block;
@@ -5854,6 +5877,10 @@ $toolbar-height-small: 46px;
   .slick-slide {
     padding: 0 20px;
   }
+}
+.about-us-sub-header {
+  font-size: em(22px);
+  font-weight: 600;
 }
 
 /* Dummy Delete */
